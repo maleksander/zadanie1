@@ -61,7 +61,7 @@ if jakiformat == "bedGraph":
     pozstop =[]
     value=[]
 
-    for a in range (x, len(linijki)-1):
+    for a in range (x, len(linijki)):      #czy tu nie powinno byc -1??????
         wartosci = (linijki[a].split())
         chromosom = wartosci[0]
         chromosomy.append(wartosci[0])
@@ -84,7 +84,7 @@ if jakiformat == "bedGraph":
 
 
 #drukowanie wartosci w formacie fixedStep
-    for d in range(0,len(linijki)-(x+1)):  
+    for d in range(0,len(linijki)- x):  
         #a = str(pozstart[d])
         b = str(value[d]) + "\n"
         #c = a +" " + b + "\n"
@@ -102,12 +102,12 @@ elif jakiformat == "fixedStep":
     stp = int(declaration_line_f[6])
     spn = int(declaration_line_f[8])
     valu=[]
-    for e in range(f, len(linijki)- 1): #powinno byc -1, dlaczego nie wyswietla ostatniego gdy jest -1???????
+    for e in range(f, len(linijki)): #powinno byc -1, dlaczego nie wyswietla ostatniego gdy jest -1???????
         val= str(linijki[e])
         valu.append(val)
 
     #drukowanie wartosci w formacie BED
-    for d in range(0,len(linijki)- (f+1)):
+    for d in range(0,len(linijki)- f):
         lista = str(chrom) + " " + str(st) + " " + str(st + spn) + " " + str(valu[d])
         st += spn
         plikzapis.write(lista)
@@ -115,4 +115,9 @@ elif jakiformat == "fixedStep":
 
         
         
+    
+    
+        
+        
+    
     
