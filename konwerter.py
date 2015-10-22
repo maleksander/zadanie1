@@ -19,10 +19,9 @@ if nazwa[1] == "bedGraph":
     nazwa[1] = "wig"
     jakiformat = "bedGraph"    
 elif nazwa[1] == "wig":
-    jakiformat = "wig"
     nazwa[1] = "bedGraph"
 nowanazwa = ".".join(nazwa)
-print jakiformat
+
 plikzapis= open(nowanazwa, 'w')
 
 #czytanie linijka po linijce
@@ -31,13 +30,17 @@ linijki = plik.readlines()
 for i in range(0, len(linijki)):
     #print linijki[i]
     
-#znalezienie track line
+#znalezienie track line i definition line 
     if linijki[i].startswith("track"):
         track = linijki[i]         
         x = i + 1
-    if linijki[i].startswith("fixedStep"):
+    elif linijki[i].startswith("fixedStep"):
         jakiformat = "fixedStep"
-        
+        declaration_line_f = linijki[i]
+        f = i + 1
+    elif linijki[i].startswith("variableStep"):
+        jakiformat = "variableStep"
+        v = i + 1
 
 # zamaiana typu w track line
 track_line = track.split()  #['track', 'type=bedGraph', 'name="BedGraph', 'Format"', 'description="BedGraph', 'format"']
@@ -81,10 +84,35 @@ if jakiformat == "bedGraph":
 
 
 #drukowanie wartosci w formacie fixedStep
-    for d in range(0,len(linijki)-(x+1)):
+    for d in range(0,len(linijki)-(x+1)):  
         #a = str(pozstart[d])
         b = str(value[d]) + "\n"
         #c = a +" " + b + "\n"
         plikzapis.write(b)
     plikzapis.close()
+
+#jesli wprowadzony plik ma format wig - fixedStep
+elif jakiformat == "fixedStep":
+    #odczyt danych z fixedstep
+    import re
+    DATA = declaration_line_f
+    declaration_line_f = re.findall(r"[\w']+", DATA)
+    chrom = declaration_line_f[2]
+    st = int(declaration_line_f[4]) -1
+    stp = int(declaration_line_f[6])
+    spn = int(declaration_line_f[8])
+    valu=[]
+    for e in range(f, len(linijki)- 1): #powinno byc -1, dlaczego nie wyswietla ostatniego gdy jest -1???????
+        val= str(linijki[e])
+        valu.append(val)
+
+    #drukowanie wartosci w formacie BED
+    for d in range(0,len(linijki)- (f+1)):
+        lista = str(chrom) + " " + str(st) + " " + str(st + spn) + " " + str(valu[d])
+        st += spn
+        plikzapis.write(lista)
+    plikzapis.close()
+
+        
+        
     
