@@ -7,7 +7,7 @@ if len(sys.argv) <2:
 
 #sprawdzenie czy wskazany plik ma wlasciwy format
 nazwa = sys.argv[1].split('.')
-if nazwa[-1] != "bedGraph" and nazwa[1] != "wig":
+if nazwa[-1] != "bedGraph" and nazwa[-1] != "wig":
     print "niewlasciwy format pliku"
     sys.exit(1)
 
@@ -15,11 +15,11 @@ if nazwa[-1] != "bedGraph" and nazwa[1] != "wig":
 plik = open(sys.argv[1], "r")
 
 #plik do zapisu - zmiana nazwy zgodnie z konwersja
-if nazwa[1] == "bedGraph":
-    nazwa[1] = "wig"
+if nazwa[-1] == "bedGraph":
+    nazwa[-1] = "wig"
     jakiformat = "bedGraph"    
-elif nazwa[1] == "wig":
-    nazwa[1] = "bedGraph"
+elif nazwa[-1] == "wig":
+    nazwa[-1] = "bedGraph"
 nowanazwa = ".".join(nazwa)
 plikzapis= open(nowanazwa, 'w')
 
@@ -29,12 +29,10 @@ linijki =[]
 linijki = plik.readlines()
 track=[]
 indeksyt =[]
-indeksyf =[]
-indeksyv =[]
 kolejnetracki =[]
 for i in range(0, len(linijki)):
 
-    #znalezienie track line i definition line 
+#znalezienie track line i definition line 
     if linijki[i].startswith("track"):
         t = i
         linijka = linijki[i]
@@ -50,12 +48,10 @@ for i in range(0, len(linijki)):
         
     elif linijki[i].startswith("fixedStep"):
         jakiformat = "fixedStep"
-        f = i
         indeksyf.append(f)
     elif linijki[i].startswith("variableStep"):
         jakiformat = "variableStep"
-        v = i
-        indeksyv.append(v)
+
         
 indeksyt.append(len(linijki))
 
@@ -91,6 +87,38 @@ if jakiformat == "bedGraph":
                 wiersz = str(linijka[2])+"\n"
                 plikzapis.write(wiersz)
     plikzapis.close()
+
+elif jakiformat=='wig':
+    a=-1
+    b=a+1
+    for j in range(0, len(indeksyt)-1):
+        a+=1
+        b+=1        
+        sekcja = {}
+        for i in range(indeksyt[a] +1, indeksyt[b]):
+            linijka = linijki[i]
+            if len(linijka.strip()) == 0:
+                continue
+            if linijka.startswith('fixedStep'):
+                DATA = linijka
+                linijka_split = re.findall(r"[\w']+", DATA)
+                chrom= linijka_split[2]
+                pocz= int(linijka_split[4]) - 1
+                krok= int(linijka_split[6])
+                spn=  int(linijka_split[8])
+                sekcja[chrom] = []
+            else:
+                sekcja[chrom].append([pocz, pocz + spn, float(linijka)])
+                pocz += krok
+
+        plikzapis.close()
+        for chrom in sekcja:
+            for linijka in sekcja[chrom]:
+                wiersz = [chrom, str(linijka[0]), str(linijka[1]), str(linijka[2])]
+                wiersz_str = " ".join(wiersz)
+                plikzapis.write(wiersz_str)
+    plikzapis.close()
+                
 
         
 
