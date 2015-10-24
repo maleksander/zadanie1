@@ -96,20 +96,23 @@ if jakiformat == "bedGraph":
             sekcja[chromosom].append([start, stop, wartosc])
             
         
-        print kolejnetracki[j] 
+        plikzapis.write(kolejnetracki[j]) 
         for chromosom in sekcja:
             s=sekcja[chromosom][0][0]
             st=int(sekcja[chromosom][1][0]) - int(sekcja[chromosom][0][0])
             sp = int(sekcja[chromosom][0][1]) - int(sekcja[chromosom][0][0])
             
             declaration_line = ["fixedStep", "chrom="+chromosom, "start="+str(s), "step="+str(st), "span="+str(sp)]
-            print declaration_line
+            deklaracja = " ".join(declaration_line) + "\n"
+            plikzapis.write(deklaracja)
             for linijka in sekcja[chromosom]:
-                print linijka[2]
+                wiersz = str(linijka[2])+"\n"
+                plikzapis.write(wiersz)
+    plikzapis.close()
 
         
        
-elif jakiformat='wig':
+elif jakiformat=='wig':
     a=-1
     b=a+1
     for j in range(0, len(indeksyt)-1):
