@@ -27,23 +27,19 @@ plikzapis= open(nowanazwa, 'w')
 #czytanie linijka po linijce
 linijki =[]
 linijki = plik.readlines()
+track=[]
 indeksyt =[]
 indeksyf =[]
 indeksyv =[]
-track=[]
-ktora = []
-z=-1
 kolejnetracki =[]
 for i in range(0, len(linijki)):
 
     #znalezienie track line i definition line 
     if linijki[i].startswith("track"):
-        z += 1
         t = i
         linijka = linijki[i]
         indeksyt.append(t)
         track.append(linijki[t])
-        ktora.append(z)
         track_spl = linijka.split()
         if track_spl[2] == "type=bedGraph":
             track_spl[2] = track_spl[2].replace("type=bedGraph", "type=wiggle_0")
@@ -62,20 +58,6 @@ for i in range(0, len(linijki)):
         indeksyv.append(v)
         
 indeksyt.append(len(linijki))
-#print indeksyt
-#print ktora
-liczba_setow = len(ktora)
-
-#for i in range(0, liczba_setow):
-#    n= ktora[i]
-#    track_spl = track[n].split()
-#    if track_spl[2] == "type=bedGraph":
-#        track_spl[2] = track_spl[2].replace("type=bedGraph", "type=wiggle_0")
-#    else:
-#        track_spl[2] = track_spl[2].replace("type=wiggle_0", "type=bedGraph")
-#    track_spl = " ".join(track_spl) + "\n"
-#    kolejnetracki.append(track_spl)
-#print kolejnetracki
 
 #czytanie z bedGraph
 if jakiformat == "bedGraph":
@@ -111,50 +93,7 @@ if jakiformat == "bedGraph":
     plikzapis.close()
 
         
-       
-elif jakiformat=='wig':
-    a=-1
-    b=a+1
-    for j in range(0, len(indeksyt)-1):
-        a+=1
-        b+=1        
-        sekcja = {}
-        chromosom = None
-        step = 0
-        span = 0
-        start = 0
-        obecny_indeks = 0
-        for i in range(indeksyt[a] +1, indeksyt[b]):
-            linijka = linijki[i]
-            if len(linijka.strip()) == 0:
-                continue
-            if linijka.startswith('fixedStep'):
-                # dowiedz sie jaki to chromosom, jaki step, start i span
-                chromosom = 'cos'
-                step = 0
-                start = 0
-                obecny_indeks = start
-                span = 0
-                sekcja[chromosom] = []
-            else:
-                sekcja[chromosom].append([obecny_indeks, obecny_indeks + span, float(linijka)])
-                obecny_indeks += step
-            
-        #print sekcja
-        print kolejnetracki[j] #write
-        index = start
-        for chromosom in sekcja:
-            for linijka in sekcja[chromosom]:
-                print chromosom, linijka[0], linijka[1], linijka[2]
-                index += step
-                # upewnic sie, czy nie trzeba gdzies dodac albo odjac 1
-            
-        
-          
-    #declaration_line=[]
-    #for i in range(0, len(indeksyt)-1):  
-        #declaration_line = ["fixedStep", "chrom="+chrom[i], "start="+strt[i], "step="+srep[i], "span="+sran[i]]
-        #deklaracja = " ".join(declaration_line) + "\n"
+
         
         
         
