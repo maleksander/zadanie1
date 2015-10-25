@@ -133,8 +133,11 @@ elif jakiformat=='variableStep':
             if linijka.startswith('variableStep'):
                 DATA = linijka
                 linijka_split = re.findall(r"[\w']+", DATA)
+                if not len(linijka_split) > 3:
+                    spn = 0
+                else:
+                    spn=  int(linijka_split[4])
                 chrom= linijka_split[2]
-                spn=  int(linijka_split[4])
                 sekcja[chrom] = []
             else:
                 wiersze = linijka.split()
