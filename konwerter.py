@@ -118,7 +118,39 @@ elif jakiformat== 'fixedStep':
                 wiersz_str = " ".join(wiersz) +"\n"
                 plikzapis.write(wiersz_str)
     plikzapis.close()
-                
+
+elif jakiformat=='variableStep':
+    a=-1
+    b=a+1
+    for j in range(0, len(indeksyt)-1):
+        a+=1
+        b+=1        
+        sekcja = {}
+        for i in range(indeksyt[a] +1, indeksyt[b]):
+            linijka = linijki[i]
+            if len(linijka.strip()) == 0:
+                continue
+            if linijka.startswith('variableStep'):
+                DATA = linijka
+                linijka_split = re.findall(r"[\w']+", DATA)
+                print linijka_split
+                chrom= linijka_split[2]
+                spn=  int(linijka_split[4])
+                sekcja[chrom] = []
+            else:
+                wiersze = linijka.split()
+                pocz = int(wiersze[0]) -1
+                warto = float(wiersze[1])
+                sekcja[chrom].append([pocz, pocz + spn, warto])
+        
+
+        plikzapis.write(kolejnetracki[j])
+        for chrom in sekcja:
+            for linijka in sekcja[chrom]:
+                wiersz = [chrom, str(linijka[0]), str(linijka[1]), str(linijka[2])]
+                wiersz_str = " ".join(wiersz) + "\n"                
+                plikzapis.write(wiersz_str)
+    plikzapis.close()
 
         
 
