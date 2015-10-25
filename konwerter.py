@@ -52,10 +52,42 @@ for i in range(0, len(linijki)):
     elif linijki[i].startswith("variableStep"):
         jakiformat = "variableStep"
 
-        
+dlugosc = len(linijki) -1    
 indeksyt.append(len(linijki))
 
 #czytanie z bedGraph
+#if jakiformat == "bedGraph":
+#    a=-1
+#    b=a+1
+#    for j in range(0, len(indeksyt)-1):
+#        a+=1
+#        b+=1        
+#        sekcja = {}
+#        for i in range(indeksyt[a] +1, indeksyt[b]): 
+#            wartosci = (linijki[i].split())
+#            chromosom = wartosci[0]
+#            start = int(wartosci[1]) + 1
+#            stop = int(wartosci[2]) + 1
+#            wartosc = float(wartosci[3])
+#            if not chromosom in sekcja:
+#                sekcja[chromosom] = []
+#            sekcja[chromosom].append([start, stop, wartosc])
+#            
+#        print sekcja
+#        plikzapis.write(kolejnetracki[j]) 
+#        for chromosom in sekcja:
+#            s=sekcja[chromosom][0][0]
+#            st=int(sekcja[chromosom][1][0]) - int(sekcja[chromosom][0][0])
+#            sp = int(sekcja[chromosom][0][1]) - int(sekcja[chromosom][0][0])
+#            
+#            declaration_line = ["fixedStep", "chrom="+chromosom, "start="+str(s), "step="+str(st), "span="+str(sp)]
+#            deklaracja = " ".join(declaration_line) + "\n"
+#            plikzapis.write(deklaracja)
+#            for linijka in sekcja[chromosom]:
+#                wiersz = str(linijka[2])+"\n"
+#                plikzapis.write(wiersz)
+#    plikzapis.close()
+
 if jakiformat == "bedGraph":
     a=-1
     b=a+1
@@ -73,18 +105,16 @@ if jakiformat == "bedGraph":
                 sekcja[chromosom] = []
             sekcja[chromosom].append([start, stop, wartosc])
             
-        
         plikzapis.write(kolejnetracki[j]) 
         for chromosom in sekcja:
-            s=sekcja[chromosom][0][0]
-            st=int(sekcja[chromosom][1][0]) - int(sekcja[chromosom][0][0])
-            sp = int(sekcja[chromosom][0][1]) - int(sekcja[chromosom][0][0])
-            
-            declaration_line = ["fixedStep", "chrom="+chromosom, "start="+str(s), "step="+str(st), "span="+str(sp)]
-            deklaracja = " ".join(declaration_line) + "\n"
-            plikzapis.write(deklaracja)
-            for linijka in sekcja[chromosom]:
-                wiersz = str(linijka[2])+"\n"
+            spany = []
+            for q in range(0,len(sekcja[chromosom])):
+                sp = int(sekcja[chromosom][q][1]) - int(sekcja[chromosom][q][0])
+                spany.append(sp)
+                declaration_line = ["variable", "chrom="+chromosom, "span="+str(sp)]
+                deklaracja = " ".join(declaration_line) + "\n"
+                plikzapis.write(deklaracja)
+                wiersz = str(sekcja[chromosom][q][0]) + " " + str(sekcja[chromosom][q][2]) + "\n"
                 plikzapis.write(wiersz)
     plikzapis.close()
 
@@ -103,7 +133,7 @@ elif jakiformat== 'fixedStep':
                 DATA = linijka
                 linijka_split = re.findall(r"[\w']+", DATA)
                 if not len(linijka_split) > 7:
-                    spn = 0
+                    spn = 1
                 else:
                     spn=  int(linijka_split[8])
                 chrom= linijka_split[2]
@@ -137,7 +167,7 @@ elif jakiformat=='variableStep':
                 DATA = linijka
                 linijka_split = re.findall(r"[\w']+", DATA)
                 if not len(linijka_split) > 3:
-                    spn = 0
+                    spn = 1
                 else:
                     spn=  int(linijka_split[4])
                 chrom= linijka_split[2]
