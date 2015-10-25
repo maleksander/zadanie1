@@ -102,10 +102,13 @@ elif jakiformat== 'fixedStep':
             if linijka.startswith('fixedStep'):
                 DATA = linijka
                 linijka_split = re.findall(r"[\w']+", DATA)
+                if not len(linijka_split) > 7:
+                    spn = 0
+                else:
+                    spn=  int(linijka_split[8])
                 chrom= linijka_split[2]
                 pocz= int(linijka_split[4]) - 1
                 krok= int(linijka_split[6])
-                spn=  int(linijka_split[8])
                 sekcja[chrom] = []
             else:
                 sekcja[chrom].append([pocz, pocz + spn, float(linijka)])
