@@ -1,4 +1,5 @@
 import sys
+import re
 
 #sprawdzenie czy wprowadzono sciezke pliku
 if len(sys.argv) <2:
@@ -39,16 +40,15 @@ for i in range(0, len(linijki)):
         indeksyt.append(t)
         track.append(linijki[t])
         track_spl = linijka.split()
-        if track_spl[2] == "type=bedGraph":
-            track_spl[2] = track_spl[2].replace("type=bedGraph", "type=wiggle_0")
+        if track_spl[1] == "type=bedGraph":
+            track_spl[1] = track_spl[1].replace("type=bedGraph", "type=wiggle_0")
         else:
-            track_spl[2] = track_spl[2].replace("type=wiggle_0", "type=bedGraph")
+            track_spl[1] = track_spl[1].replace("type=wiggle_0", "type=bedGraph")
         track_spl = " ".join(track_spl) + "\n"
         kolejnetracki.append(track_spl)
         
     elif linijki[i].startswith("fixedStep"):
         jakiformat = "fixedStep"
-        indeksyf.append(f)
     elif linijki[i].startswith("variableStep"):
         jakiformat = "variableStep"
 
@@ -88,7 +88,7 @@ if jakiformat == "bedGraph":
                 plikzapis.write(wiersz)
     plikzapis.close()
 
-elif jakiformat=='wig':
+elif jakiformat== 'fixedStep':
     a=-1
     b=a+1
     for j in range(0, len(indeksyt)-1):
@@ -111,11 +111,11 @@ elif jakiformat=='wig':
                 sekcja[chrom].append([pocz, pocz + spn, float(linijka)])
                 pocz += krok
 
-        plikzapis.close()
+        plikzapis.write(kolejnetracki[j]) 
         for chrom in sekcja:
             for linijka in sekcja[chrom]:
                 wiersz = [chrom, str(linijka[0]), str(linijka[1]), str(linijka[2])]
-                wiersz_str = " ".join(wiersz)
+                wiersz_str = " ".join(wiersz) +"\n"
                 plikzapis.write(wiersz_str)
     plikzapis.close()
                 
