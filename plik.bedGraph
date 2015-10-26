@@ -1,0 +1,12 @@
+track type=bedGraph name="neurons H3K27ac" description="acetylation of 27th lysine in neurons of Drosophila melanogaster"
+YHet	32	63	6
+YHet	63	83	15
+YHet	83	114	9
+YHet	1934	1965	5
+YHet	1965	1996	10
+chr1	1996	1997	5
+chr1	1997	1998	10
+chr1	1998	2042	5
+chr1	2042	2086	8
+chr1	2086	2093	3
+chr1	2892	2943	1

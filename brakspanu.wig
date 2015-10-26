@@ -1,0 +1,45 @@
+track type=wiggle_0 name="mnase" description="neurons mnase" visibility=full
+fixedStep chrom=dmel_mitochondrion_genome start=1  step=10 span=10
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+fixedStep chrom=2R start=1  step=10 span=10
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+fixedStep chrom=3R start=1  step=10 span=10
+0.0
+0.0
+0.0
+0.0
+62.0883656202
+149.415904257
+200.39903375
+293.27919045
+383.635429848
+418.465488611
+fixedStep chrom=2RHet start=1  step=10 
+0.0
+0.0
+0.0
+0.0
+22.2104722544
+47.4496452707
+51.9926964136
+58.0500979376
+62.5931490805
+65.6218498425

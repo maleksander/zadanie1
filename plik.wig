@@ -1,0 +1,46 @@
+track type=wiggle_0 name="neurons H3K27ac" description="acetylation of 27th lysine in neurons of Drosophila melanogaster"
+variable chrom=YHet span=31
+33 6.0
+variable chrom=YHet span=20
+64 15.0
+variable chrom=YHet span=31
+84 9.0
+variable chrom=YHet span=13
+1935 5.0
+variable chrom=YHet span=38
+1948 10.0
+variable chrom=chr1 span=9
+1986 5.0
+variable chrom=chr1 span=4
+1995 10.0
+variable chrom=chr1 span=44
+1999 5.0
+variable chrom=chr1 span=3
+2043 8.0
+variable chrom=chr1 span=48
+2046 3.0
+variable chrom=chr1 span=51
+2893 1.0
+track type=wiggle_0 name="neurons H3K27ac" description="acetylation of 27th lysine in neurons of Drosophila melanogaster"
+variable chrom=YHet span=31
+33 6.0
+variable chrom=YHet span=20
+64 15.0
+variable chrom=YHet span=31
+84 9.0
+variable chrom=YHet span=13
+1935 5.0
+variable chrom=YHet span=38
+1948 10.0
+variable chrom=chr1 span=9
+1986 5.0
+variable chrom=chr1 span=4
+1995 10.0
+variable chrom=chr1 span=44
+1999 5.0
+variable chrom=chr1 span=3
+2043 8.0
+variable chrom=chr1 span=48
+2046 3.0
+variable chrom=chr1 span=51
+2893 1.0
