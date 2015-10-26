@@ -107,11 +107,10 @@ if jakiformat == "bedGraph":
             
         plikzapis.write(kolejnetracki[j]) 
         for chromosom in sekcja:
-            spany = []
             for q in range(0,len(sekcja[chromosom])):
                 sp = int(sekcja[chromosom][q][1]) - int(sekcja[chromosom][q][0])
                 spany.append(sp)
-                declaration_line = ["variable", "chrom="+chromosom, "span="+str(sp)]
+                declaration_line = ["variableStep", "chrom="+chromosom, "span="+str(sp)]
                 deklaracja = " ".join(declaration_line) + "\n"
                 plikzapis.write(deklaracja)
                 wiersz = str(sekcja[chromosom][q][0]) + " " + str(sekcja[chromosom][q][2]) + "\n"
